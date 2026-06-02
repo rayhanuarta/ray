@@ -1,0 +1,291 @@
+from IPython.display import HTML
+
+html_code = r'''
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Oyin Cantik </title>
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+        }
+
+        body{
+            min-height:100vh;
+            background:linear-gradient(135deg,#ff9a9e 0%,#fecfef 50%,#ffecd2 100%);
+            font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+            overflow-x:hidden;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+        }
+
+        .container{
+            text-align:center;
+            padding:40px;
+            background:rgba(255,255,255,0.9);
+            border-radius:30px;
+            box-shadow:0 20px 60px rgba(0,0,0,.1);
+            max-width:700px;
+            animation:float 3s ease-in-out infinite;
+        }
+
+        @keyframes float{
+            0%,100%{transform:translateY(0);}
+            50%{transform:translateY(-10px);}
+        }
+
+        h1{
+            color:#ff6b95;
+            margin-bottom:20px;
+        }
+
+        .message{
+            font-size:1.2rem;
+            color:#555;
+            margin:20px 0;
+            line-height:1.8;
+        }
+
+        .emoji-container{
+            font-size:4rem;
+            margin:20px 0;
+            animation:pulse 1s infinite;
+        }
+
+        @keyframes pulse{
+            0%,100%{transform:scale(1);}
+            50%{transform:scale(1.1);}
+        }
+
+        .btn{
+            background:linear-gradient(45deg,#ff6b95,#ff8a8a);
+            color:white;
+            border:none;
+            padding:15px 35px;
+            border-radius:50px;
+            cursor:pointer;
+            font-size:1.1rem;
+            margin-top:15px;
+        }
+
+        .btn:hover{
+            transform:scale(1.05);
+        }
+
+        .gallery{
+            display:flex;
+            justify-content:center;
+            flex-wrap:wrap;
+            gap:10px;
+            margin:20px 0;
+        }
+
+        .photo{
+            width:90px;
+            height:90px;
+            border-radius:15px;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            font-size:2.5rem;
+            cursor:pointer;
+            background:linear-gradient(45deg,#ff9a9e,#fecfef);
+            transition:.3s;
+        }
+
+        .photo:hover{
+            transform:scale(1.15);
+        }
+
+        .quote-box{
+            display:none;
+            margin-top:20px;
+            padding:20px;
+            border-radius:20px;
+            background:linear-gradient(135deg,#ffeaa7,#fdcb6e);
+            color:white;
+            font-size:1.2rem;
+            font-weight:bold;
+        }
+
+        .show{
+            display:block;
+        }
+
+        .hearts{
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            height:100%;
+            pointer-events:none;
+        }
+
+        .heart{
+            position:absolute;
+            animation:fall linear forwards;
+        }
+
+        @keyframes fall{
+            from{
+                transform:translateY(-100px);
+                opacity:1;
+            }
+            to{
+                transform:translateY(100vh);
+                opacity:0;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<div class="container">
+
+    <div class="emoji-container" id="mainEmoji">📤</div>
+
+    <h1>Hi Oyin Cantik</h1>
+
+    <div class="message" id="message">
+        Hari ini capek ya ndut? <br>
+        Hope this make u smile <br>
+        Pencet emoji terus pencet click ya
+    </div>
+
+    <div class="gallery">
+        <div class="photo" onclick="showLove()">☀️</div>
+        <div class="photo" onclick="showFlower()">🕹️</div>
+        <div class="photo" onclick="showStar()">🎞️</div>
+        <div class="photo" onclick="showHug()">🧸</div>
+        <div class="photo" onclick="showMoon()">💟</div>
+        <div class="photo" onclick="showSmile()">🌀</div>
+    </div>
+
+    <button class="btn" onclick="showSurprise()">
+        Click here 
+    </button>
+
+    <div class="quote-box" id="quoteBox">
+        <p id="quote"></p>
+    </div>
+
+</div>
+
+<script>
+
+const quotes = [
+    "You are the reason my world feels brighter every single day.",
+    "No matter what happens, I’ll always be here cheering you on.",
+    "Your smile is my favorite part of every day.",
+    "You have a beautiful way of making everything better.",
+    "I hope you never forget how loved and appreciated you are.",
+    "Thank you for being exactly who you are. You’re amazing.",
+];
+
+const emojis = ["☀️","🕹️","🎞️","🧸","💟","🌀"];
+
+function showSurprise(){
+
+    const quote =
+        quotes[Math.floor(Math.random()*quotes.length)];
+
+    document.getElementById("quote").innerHTML = quote;
+
+    document.getElementById("quoteBox")
+        .classList.add("show");
+
+    document.getElementById("mainEmoji")
+        .textContent =
+        emojis[Math.floor(Math.random()*emojis.length)];
+
+    createHearts();
+}
+
+function showLove() {
+    document.getElementById("message").innerHTML =
+        "Your light makes even the darkest days feel brighter.";
+}
+
+function showFlower() {
+    document.getElementById("message").innerHTML =
+        "You are loved more than you know.";
+    createHearts();
+}
+
+function showStar() {
+    document.getElementById("message").innerHTML =
+        "You make ordinary moments feel a little more beautiful.";
+}
+
+function showHug() {
+    document.getElementById("message").innerHTML =
+        "Sending you a warm big hug whenever you need one.";
+}
+
+function showMoon() {
+    document.getElementById("message").innerHTML =
+        "You shine in your own beautiful way, and that’s what makes you special.";
+}
+
+function showSmile() {
+    document.getElementById("message").innerHTML =
+        "A gentle reminder: you never have to face everything alone.";
+}
+
+function createHearts(){
+
+    const container =
+        document.getElementById("hearts");
+
+    for(let i=0;i<15;i++){
+
+        setTimeout(()=>{
+
+            const heart =
+                document.createElement("div");
+
+            heart.className = "heart";
+
+            const icons =
+                ["☀️","🕹️","🎞️","🧸","💟","🌀"];
+
+            heart.innerHTML =
+                icons[Math.floor(Math.random()*icons.length)];
+
+            heart.style.left =
+                Math.random()*100 + "vw";
+
+            heart.style.fontSize =
+                (20 + Math.random()*20) + "px";
+
+            heart.style.animationDuration =
+                (2 + Math.random()*3) + "s";
+
+            container.appendChild(heart);
+
+            setTimeout(()=>{
+                heart.remove();
+            },5000);
+
+        },i*150);
+    }
+}
+
+setInterval(createHearts,8000);
+
+</script>
+
+</body>
+</html>
+'''
+
+HTML(html_code)
