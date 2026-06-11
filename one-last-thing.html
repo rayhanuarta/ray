@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>One Last Thing</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Lato:wght@300;400&display=swap" rel="stylesheet"/>
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Lato',sans-serif;
+  background:#06061a;
+  color:#c0c8e0;
+  overflow:hidden;
+  height:100vh;width:100vw;
+  user-select:none;
+}
+
+/* ─── CANVAS BACKGROUND ────────────────────────────────────── */
+#starCanvas{
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  z-index:0;
+  pointer-events:none;
+}
+
+/* ─── PAGES ────────────────────────────────────────────────── */
+.page{
+  position:fixed;inset:0;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  z-index:10;
+  padding:24px;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .7s ease;
+}
+.page.active{opacity:1;pointer-events:all}
+
+/* ─── PAGE 1 — INTRO ───────────────────────────────────────── */
+#page1{text-align:center}
+.greeting-eyebrow{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,3vw,1.3rem);
+  letter-spacing:.35em;
+  text-transform:uppercase;
+  color:#f5d77e;
+  opacity:.7;
+  margin-bottom:18px;
+  animation:fadeUp .9s ease both;
+}
+.greeting-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.8rem,9vw,6rem);
+  font-weight:300;
+  line-height:1.1;
+  color:#e8eaf6;
+  letter-spacing:.02em;
+  text-shadow:0 0 60px rgba(100,120,220,.55),0 0 120px rgba(60,80,200,.25);
+  animation:fadeUp .9s .15s ease both;
+  margin-bottom:8px;
+}
+.greeting-name{
+  color:#f5d77e;
+  font-style:italic;
+  text-shadow:0 0 40px rgba(245,215,126,.5);
+}
+.greeting-sub{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,3vw,1.4rem);
+  color:#a0aace;
+  margin-bottom:48px;
+  animation:fadeUp .9s .3s ease both;
+}
+.btn-primary{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1rem,3vw,1.2rem);
+  letter-spacing:.15em;
+  padding:14px 40px;
+  border:1px solid rgba(245,215,126,.35);
+  background:rgba(245,215,126,.07);
+  color:#f5d77e;
+  border-radius:60px;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:all .35s ease;
+  animation:fadeUp .9s .45s ease both;
+  position:relative;
+  overflow:hidden;
+}
+.btn-primary::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 130%,rgba(245,215,126,.2) 0%,transparent 70%);
+  opacity:0;transition:opacity .35s;
+}
+.btn-primary:hover{
+  border-color:rgba(245,215,126,.7);
+  box-shadow:0 0 30px rgba(245,215,126,.18),0 0 60px rgba(245,215,126,.08);
+  transform:translateY(-2px);
+}
+.btn-primary:hover::before{opacity:1}
+
+/* ─── PAGE 2 — CONFESSION ──────────────────────────────────── */
+#page2{justify-content:center;overflow-y:auto;padding:20px}
+.letter-wrap{
+  width:100%;max-width:640px;
+  margin:auto;
+}
+.letter-card{
+  background:rgba(10,12,35,.65);
+  border:1px solid rgba(192,200,224,.12);
+  border-radius:20px;
+  padding:clamp(28px,6vw,52px);
+  backdrop-filter:blur(18px);
+  box-shadow:
+    0 0 0 1px rgba(100,120,240,.06),
+    0 8px 60px rgba(0,0,20,.6),
+    inset 0 1px 0 rgba(255,255,255,.05);
+  position:relative;
+}
+.letter-card::before{
+  content:'';
+  position:absolute;inset:-1px;
+  border-radius:21px;
+  background:linear-gradient(135deg,rgba(245,215,126,.12),transparent 50%,rgba(100,120,240,.1));
+  z-index:-1;
+  pointer-events:none;
+}
+.letter-header{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.8rem,2vw,1rem);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:#f5d77e;
+  opacity:.6;
+  margin-bottom:28px;
+  display:flex;align-items:center;gap:12px;
+}
+.letter-header::after{content:'';flex:1;height:1px;background:rgba(245,215,126,.15)}
+.letter-body{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.05rem,2.5vw,1.25rem);
+  font-weight:300;
+  line-height:1.85;
+  color:#dde2f0;
+  min-height:200px;
+}
+.cursor-blink{
+  display:inline-block;width:2px;height:1.1em;
+  background:#f5d77e;margin-left:2px;
+  vertical-align:text-bottom;
+  animation:blink .75s step-end infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.letter-footer{margin-top:32px;text-align:right}
+.letter-sign{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.15rem);
+  color:#f5d77e;opacity:.8;
+}
+#continueBtn{
+  margin-top:36px;
+  opacity:0;transition:opacity .6s ease;
+  display:block;width:fit-content;margin-left:auto;margin-right:auto;
+}
+#continueBtn.show{opacity:1}
+
+/* ─── PAGE 3 — QUESTION ────────────────────────────────────── */
+#page3{text-align:center;gap:0}
+.question-text{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.8rem,6vw,3.8rem);
+  font-weight:300;
+  line-height:1.25;
+  color:#e8eaf6;
+  max-width:600px;
+  text-shadow:0 0 80px rgba(100,120,220,.4);
+  margin-bottom:52px;
+  animation:fadeUp .8s ease both;
+}
+.question-text span{color:#f5d77e;font-style:italic}
+.btn-row{
+  display:flex;align-items:center;justify-content:center;
+  gap:24px;flex-wrap:wrap;
+  position:relative;
+  min-height:80px;
+  width:100%;max-width:420px;
+}
+.btn-yes{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  letter-spacing:.12em;
+  padding:14px 38px;
+  border:1px solid rgba(245,215,126,.4);
+  background:rgba(245,215,126,.1);
+  color:#f5d77e;
+  border-radius:60px;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:all .3s ease;
+  animation:fadeUp .8s .2s ease both;
+}
+.btn-yes:hover{
+  background:rgba(245,215,126,.2);
+  box-shadow:0 0 35px rgba(245,215,126,.25);
+  transform:scale(1.04);
+}
+.btn-no{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.05rem;
+  letter-spacing:.1em;
+  padding:13px 32px;
+  border:1px solid rgba(160,170,206,.2);
+  background:rgba(20,25,60,.3);
+  color:#8892b0;
+  border-radius:60px;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  transition:transform .25s ease,opacity .25s ease,font-size .25s ease;
+  animation:fadeUp .8s .35s ease both;
+  position:absolute;
+  left:0;
+  white-space:nowrap;
+}
+
+/* ─── PAGE 4 — YES RESPONSE ────────────────────────────────── */
+#page4{text-align:center;gap:20px}
+.yes-emoji{font-size:2.5rem;animation:pop .5s ease both}
+.yes-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(1.6rem,5vw,3rem);
+  font-weight:300;
+  color:#f5d77e;
+  text-shadow:0 0 60px rgba(245,215,126,.4);
+  animation:fadeUp .6s .1s ease both;
+}
+.yes-lines{
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(1rem,2.5vw,1.3rem);
+  color:#c0c8e0;
+  line-height:2;
+  animation:fadeUp .6s .25s ease both;
+}
+.btn-telegram{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.1rem;
+  letter-spacing:.12em;
+  padding:14px 40px;
+  border:1px solid rgba(100,160,255,.35);
+  background:rgba(100,160,255,.08);
+  color:#a0c4ff;
+  border-radius:60px;
+  cursor:pointer;
+  backdrop-filter:blur(8px);
+  text-decoration:none;
+  display:inline-block;
+  transition:all .3s ease;
+  animation:fadeUp .6s .4s ease both;
+  margin-top:8px;
+}
+.btn-telegram:hover{
+  background:rgba(100,160,255,.18);
+  box-shadow:0 0 35px rgba(100,160,255,.2);
+  transform:translateY(-2px);
+}
+
+/* ─── CONFETTI CANVAS ──────────────────────────────────────── */
+#confettiCanvas{
+  position:fixed;inset:0;
+  width:100%;height:100%;
+  z-index:5;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .3s;
+}
+#confettiCanvas.active{opacity:1}
+
+/* ─── GLOW OVERLAY ─────────────────────────────────────────── */
+.glow-overlay{
+  position:fixed;inset:0;
+  background:radial-gradient(ellipse at 50% 40%,rgba(40,60,180,.18) 0%,transparent 65%);
+  z-index:1;pointer-events:none;
+}
+
+/* ─── SPARKLE LAYER ────────────────────────────────────────── */
+.sparkle{
+  position:fixed;
+  pointer-events:none;
+  z-index:8;
+  font-size:1rem;
+  animation:sparklePop .8s ease forwards;
+}
+@keyframes sparklePop{
+  0%{transform:scale(0) rotate(0deg);opacity:1}
+  60%{transform:scale(1.4) rotate(30deg);opacity:1}
+  100%{transform:scale(.6) rotate(60deg) translateY(-30px);opacity:0}
+}
+
+/* ─── SHARED KEYFRAMES ─────────────────────────────────────── */
+@keyframes fadeUp{
+  from{opacity:0;transform:translateY(24px)}
+  to{opacity:1;transform:translateY(0)}
+}
+@keyframes pop{
+  0%{transform:scale(0)}50%{transform:scale(1.3)}100%{transform:scale(1)}
+}
+
+/* ─── CINEMATIC TRANSITION ─────────────────────────────────── */
+#curtain{
+  position:fixed;inset:0;
+  background:#06061a;
+  z-index:100;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity .5s ease;
+}
+#curtain.show{opacity:1;pointer-events:all}
+
+/* ─── MOBILE TWEAKS ────────────────────────────────────────── */
+@media(max-width:480px){
+  .btn-row{flex-direction:column;gap:16px}
+  .btn-no{position:static!important;transform:none!important;font-size:1rem!important}
+}
+
+/* prevent no-btn from going off screen on tiny phones */
+.btn-no{
+  max-width:calc(100vw - 48px);
+}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  CONFIG — edit these                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+const CONFIG = {
+  recipientName : "Oyin",
+  telegramLink  : "https://t.me/DuskfaII",   // ← ganti ini
+  confessionText: `Oyin,\n\nKamu tau gak udah berapa kali aku bilang "sayang" ke kamu? And now, I really mean it. Bahkan isi room chat kita juga gabisa boong, kalo disearch kata "sayang" jumlahnya udah lebih dari seribu kali. Awalnya mungkin cuma kebiasaan, cuma panggilan yang sering keluar gitu aja. Tapi makin hari, aku sadar kalo setiap kali aku bilang itu, perasaanku juga ikut tumbuh sedikit demi sedikit sampai akhirnya jadi sebesar ini.\n\nAku tau kita mungkin belum kenal selama itu. Belum selama orang-orang yang punya cerita berbulan-bulan. Tapi justru karena itu, aku masih punya banyak hal yang pengen aku tau tentang kamu. I still want to learn more about you every day, Oyin. Aku masih mau tau apa yang bikin kamu ketawa sampai sakit perut, apa yang bikin kamu ngambek selain aku wkwk, hal-hal kecil yang kamu suka, dan semua cerita yang belum sempet kamu ceritain.\n\nAku juga mau jadi orang yang bisa ada buat kamu lebih lama. Bukan cuma buat basa basi atau saling ngucapin good morning good night, but to grow together, understand each other, take care of one another, and be each other's safe place when life gets overwhelming.\n\nDan satu hal yang perlu kamu tau, aku udah nyelesaiin semua yang emang harus aku selesaiin sama orang lain. There is no unfinished story behind me anymore. Jadi sekarang cuma ada kamu yang bikin aku berani ngambil langkah ini. Aku harap kamu bisa ngerti apa yang pengen aku sampaiin lewat semua kata-kata ini, even kamu tau aku ga sejago itu bikin kata-kata, dan seberapa besar keberanian yang aku kumpulin buat akhirnya jujur.\n\nSo... now it's your turn to decide.`,
+  senderName    : "Someone who thinks of you beneath the stars, Ahan",
+};
+</script>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  DOM                                                        -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<canvas id="starCanvas"></canvas>
+<canvas id="confettiCanvas"></canvas>
+<div class="glow-overlay"></div>
+<div id="curtain"></div>
+
+<!-- PAGE 1 — INTRO -->
+<div class="page active" id="page1">
+  <div class="greeting-eyebrow">One Last Thing</div>
+  <h1 class="greeting-title">Hi, <span class="greeting-name" id="recipientDisplay"></span></h1>
+  <p class="greeting-sub">"Now that you've read everything, let me ask you one final question."</p>
+  <button class="btn-primary" id="openBtn">💌 Open My Confession</button>
+</div>
+
+<!-- PAGE 2 — LETTER -->
+<div class="page" id="page2">
+  <div class="letter-wrap">
+    <div class="letter-card">
+      <div class="letter-header">✦ &nbsp;From A to O</div>
+      <div class="letter-body" id="letterBody"></div>
+      <div class="letter-footer">
+        <div class="letter-sign" id="senderSign"></div>
+      </div>
+    </div>
+    <button class="btn-primary" id="continueBtn" style="margin-top:28px;opacity:0;pointer-events:none">⭐ Continue</button>
+  </div>
+</div>
+
+<!-- PAGE 3 — QUESTION -->
+<div class="page" id="page3">
+  <p class="question-text">Will you let me <span>love you?</span></p>
+  <div class="btn-row" id="btnRow">
+    <button class="btn-no" id="noBtn">🌙 Not Yet</button>
+    <button class="btn-yes" id="yesBtn">⭐ Yes</button>
+  </div>
+</div>
+
+<!-- PAGE 4 — YES -->
+<div class="page" id="page4">
+  <div class="yes-emoji">✨</div>
+  <div class="yes-title">Thank you for saying yes, sayang.</div>
+  <div class="yes-lines">
+    Now meet me in my roomchat and say, "hi pacarku." dong.<br>
+Aku udah nungguin jawaban kamu dari tadi ini sambil gemeter dikit.
+  </div>
+  <a class="btn-telegram" id="telegramLink" href="#" target="_blank" rel="noopener">📨 Open Telegram</a>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!--  SCRIPTS                                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<script>
+/* ── Apply config ─────────────────────────────────────────── */
+document.getElementById('recipientDisplay').textContent = CONFIG.recipientName;
+document.getElementById('senderSign').textContent       = '— ' + CONFIG.senderName;
+document.getElementById('telegramLink').href            = CONFIG.telegramLink;
+
+/* ── Starfield canvas ─────────────────────────────────────── */
+(function(){
+  const c = document.getElementById('starCanvas');
+  const ctx = c.getContext('2d');
+  let W,H,stars=[],shooters=[];
+
+  function resize(){
+    W=c.width=window.innerWidth;
+    H=c.height=window.innerHeight;
+    buildStars();
+  }
+
+  function buildStars(){
+    stars=[];
+    const n = Math.floor((W*H)/1800);
+    for(let i=0;i<n;i++){
+      stars.push({
+        x:Math.random()*W,
+        y:Math.random()*H,
+        r:Math.random()*1.5+.2,
+        a:Math.random(),
+        da:(Math.random()-.5)*.003,
+        twinkle:Math.random()>.55
+      });
+    }
+  }
+
+  function addShooter(){
+    shooters.push({
+      x:Math.random()*W*.6,
+      y:Math.random()*H*.4,
+      vx: 4+Math.random()*5,
+      vy: 2+Math.random()*3,
+      len:120+Math.random()*80,
+      life:1
+    });
+  }
+
+  setInterval(addShooter, 3800);
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // nebula gradient
+    const ng=ctx.createRadialGradient(W*.35,H*.3,0,W*.35,H*.3,W*.7);
+    ng.addColorStop(0,'rgba(30,40,120,.13)');
+    ng.addColorStop(1,'transparent');
+    ctx.fillStyle=ng;ctx.fillRect(0,0,W,H);
+
+    // stars
+    stars.forEach(s=>{
+      if(s.twinkle){
+        s.a+=s.da;
+        if(s.a>1||s.a<.1){s.da*=-1}
+      }
+      ctx.beginPath();
+      ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(220,228,255,${s.a})`;
+      ctx.fill();
+      // cross sparkle for brighter stars
+      if(s.r>1.1){
+        ctx.strokeStyle=`rgba(245,215,126,${s.a*.4})`;
+        ctx.lineWidth=.5;
+        ctx.beginPath();ctx.moveTo(s.x-s.r*2.5,s.y);ctx.lineTo(s.x+s.r*2.5,s.y);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(s.x,s.y-s.r*2.5);ctx.lineTo(s.x,s.y+s.r*2.5);ctx.stroke();
+      }
+    });
+
+    // shooting stars
+    shooters=shooters.filter(s=>s.life>0);
+    shooters.forEach(s=>{
+      s.x+=s.vx;s.y+=s.vy;s.life-=.018;
+      const grad=ctx.createLinearGradient(s.x,s.y,s.x-s.len*.8,s.y-s.len*.4);
+      grad.addColorStop(0,`rgba(245,215,126,${s.life*.9})`);
+      grad.addColorStop(1,'transparent');
+      ctx.beginPath();ctx.moveTo(s.x,s.y);ctx.lineTo(s.x-s.len,s.y-s.len*.5);
+      ctx.strokeStyle=grad;ctx.lineWidth=1.5;ctx.stroke();
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize',resize);
+  resize();draw();
+})();
+
+/* ── Page transitions ─────────────────────────────────────── */
+const pages = document.querySelectorAll('.page');
+function goTo(id, cb){
+  const curtain=document.getElementById('curtain');
+  curtain.classList.add('show');
+  setTimeout(()=>{
+    pages.forEach(p=>p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    curtain.classList.remove('show');
+    if(cb)setTimeout(cb,400);
+  },500);
+}
+
+/* ── Letter typing ────────────────────────────────────────── */
+function typeText(el, text, onDone){
+  const lines = text.split('\n');
+  let li=0,ci=0;
+  const cursor=document.createElement('span');
+  cursor.className='cursor-blink';
+  el.appendChild(cursor);
+
+  function tick(){
+    if(li>=lines.length){onDone&&onDone();cursor.remove();return;}
+    const line=lines[li];
+    if(ci<line.length){
+      const ch=document.createTextNode(line[ci]);
+      el.insertBefore(ch,cursor);
+      ci++;
+      setTimeout(tick, ci===1&&li>0?50:22+Math.random()*18);
+    } else {
+      el.insertBefore(document.createElement('br'),cursor);
+      li++;ci=0;
+      setTimeout(tick,line.length===0?60:180);
+    }
+  }
+  setTimeout(tick,400);
+}
+
+/* ── Open confession button ───────────────────────────────── */
+document.getElementById('openBtn').addEventListener('click',()=>{
+  goTo('page2',()=>{
+    const body=document.getElementById('letterBody');
+    const cont=document.getElementById('continueBtn');
+    typeText(body,CONFIG.confessionText,()=>{
+      cont.style.opacity='1';
+      cont.style.pointerEvents='auto';
+      cont.classList.add('show');
+      spawnLetterSparkles();
+    });
+  });
+});
+
+/* ── Continue button ──────────────────────────────────────── */
+document.getElementById('continueBtn').addEventListener('click',()=>{
+  goTo('page3');
+});
+
+/* ── "Not Yet" dodge behavior ─────────────────────────────── */
+const noBtn=document.getElementById('noBtn');
+const btnRow=document.getElementById('btnRow');
+const noTexts=["Think Again 👀","Are You Sure? 🌙","Really? ✨","Maybe Yes? ⭐","Not so fast 🌟","Hmm... ✦"];
+let noMoveCount=0;
+
+function isMobile(){return window.innerWidth<=480}
+
+function dodgeNoBtn(e){
+  if(isMobile()){
+    // on mobile just wiggle
+    noBtn.style.transition='transform .2s ease';
+    noBtn.style.transform=`rotate(${(Math.random()-.5)*20}deg) scale(${.75+Math.random()*.2})`;
+    noBtn.textContent=noTexts[Math.floor(Math.random()*noTexts.length)];
+    setTimeout(()=>noBtn.style.transform='',600);
+    return;
+  }
+  noMoveCount++;
+  const rowRect=btnRow.getBoundingClientRect();
+  const btnW=noBtn.offsetWidth, btnH=noBtn.offsetHeight;
+
+  const maxX=rowRect.width - btnW;
+  const maxY=rowRect.height - btnH;
+
+  let nx=Math.random()*maxX - maxX/2;
+  let ny=(Math.random()-.5)*60;
+
+  // keep in viewport
+  const absX=rowRect.left+rowRect.width/2+nx;
+  const absY=rowRect.top +rowRect.height/2+ny;
+  if(absX<btnW/2+10) nx+=btnW;
+  if(absX>window.innerWidth-btnW/2-10) nx-=btnW;
+  if(absY<btnH) ny+=40;
+  if(absY>window.innerHeight-btnH) ny-=40;
+
+  const rot=(Math.random()-.5)*25;
+  const scale=.7+Math.random()*.35;
+
+  noBtn.style.transition='transform .25s ease, left .25s ease, top .25s ease, font-size .25s ease';
+  noBtn.style.position='absolute';
+  noBtn.style.left=(rowRect.width/2 + nx - btnW/2)+'px';
+  noBtn.style.top=(rowRect.height/2 + ny - btnH/2)+'px';
+  noBtn.style.transform=`rotate(${rot}deg) scale(${scale})`;
+  noBtn.textContent=noTexts[Math.floor(Math.random()*noTexts.length)];
+}
+
+noBtn.addEventListener('mousemove', dodgeNoBtn);
+noBtn.addEventListener('touchstart', (e)=>{e.preventDefault();dodgeNoBtn(e);},{passive:false});
+
+// reset btn row height so absolute positioning works
+document.getElementById('page3').addEventListener('transitionend',()=>{
+  if(document.getElementById('page3').classList.contains('active')){
+    btnRow.style.height='80px';
+  }
+});
+
+/* ── Yes button ───────────────────────────────────────────── */
+document.getElementById('yesBtn').addEventListener('click',()=>{
+  launchConfetti();
+  goTo('page4');
+});
+
+/* ── Confetti/sparkle rain ─────────────────────────────────── */
+function launchConfetti(){
+  const cc=document.getElementById('confettiCanvas');
+  const ctx=cc.getContext('2d');
+  cc.width=window.innerWidth;cc.height=window.innerHeight;
+  cc.classList.add('active');
+
+  const SYMBOLS=['★','✦','✧','⋆','⊹','𖦹'];
+  const particles=[];
+  const colors=['#f5d77e','#c0c8e0','#a0b0ff','#fff','#ffd6a5'];
+  for(let i=0;i<140;i++){
+    particles.push({
+      x:Math.random()*cc.width,
+      y:-20-Math.random()*200,
+      vy:1.5+Math.random()*3,
+      vx:(Math.random()-.5)*2,
+      sym:SYMBOLS[Math.floor(Math.random()*SYMBOLS.length)],
+      col:colors[Math.floor(Math.random()*colors.length)],
+      size:10+Math.random()*18,
+      rot:Math.random()*360,
+      drot:(Math.random()-.5)*4,
+      life:1
+    });
+  }
+  let frame=0;
+  function draw(){
+    ctx.clearRect(0,0,cc.width,cc.height);
+    particles.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;p.rot+=p.drot;
+      if(frame>120) p.life-=.012;
+      ctx.save();
+      ctx.globalAlpha=Math.max(0,p.life);
+      ctx.font=`${p.size}px serif`;
+      ctx.fillStyle=p.col;
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillText(p.sym,-p.size/2,-p.size/2);
+      ctx.restore();
+    });
+    frame++;
+    if(frame<280) requestAnimationFrame(draw);
+    else{ctx.clearRect(0,0,cc.width,cc.height);cc.classList.remove('active');}
+  }
+  draw();
+}
+
+/* ── Sparkles around letter ───────────────────────────────── */
+function spawnLetterSparkles(){
+  const card=document.querySelector('.letter-card');
+  if(!card)return;
+  const rect=card.getBoundingClientRect();
+  const syms=['✦','★','⋆','✧'];
+  for(let i=0;i<14;i++){
+    setTimeout(()=>{
+      const el=document.createElement('div');
+      el.className='sparkle';
+      el.textContent=syms[Math.floor(Math.random()*syms.length)];
+      el.style.left=(rect.left-20+Math.random()*(rect.width+40))+'px';
+      el.style.top=(rect.top-20+Math.random()*(rect.height+40))+'px';
+      el.style.color=Math.random()>.5?'#f5d77e':'#c0c8e0';
+      el.style.fontSize=(12+Math.random()*14)+'px';
+      document.body.appendChild(el);
+      setTimeout(()=>el.remove(),900);
+    },i*120);
+  }
+}
+
+/* ── Ambient cursor sparkle (desktop) ────────────────────── */
+let lastSparkle=0;
+document.addEventListener('mousemove',e=>{
+  const now=Date.now();
+  if(now-lastSparkle<160)return;
+  lastSparkle=now;
+  if(Math.random()>.4)return;
+  const el=document.createElement('div');
+  el.className='sparkle';
+  el.textContent=['✦','⋆','·'][Math.floor(Math.random()*3)];
+  el.style.left=(e.clientX-8+Math.random()*16)+'px';
+  el.style.top=(e.clientY-8+Math.random()*16)+'px';
+  el.style.color='rgba(245,215,126,.6)';
+  el.style.fontSize='10px';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(),900);
+});
+</script>
+</body>
+</html>
