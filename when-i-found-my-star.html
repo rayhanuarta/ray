@@ -856,18 +856,17 @@ function playMelodyStep() {
 }
 
 function toggleMusic() {
-  ensureAudio();
-  musicPlaying = !musicPlaying;
+  const music = document.getElementById('bgMusic');
   const btn = document.getElementById('musicBtn');
-  if (musicPlaying) {
+
+  if (music.paused) {
+    music.play();
     btn.textContent = '🎶';
     btn.classList.add('playing');
-    melodyIdx = 0;
-    playMelodyStep();
   } else {
+    music.pause();
     btn.textContent = '🎵';
     btn.classList.remove('playing');
-    if (melodyTimeout) clearTimeout(melodyTimeout);
   }
 }
 
@@ -1165,5 +1164,10 @@ function typewriterEffect() {
 buildStarfield();
 buildParticles();
 </script>
+
+<audio id="bgMusic" loop>
+  <source src="Fallingforyou The 1975.mp3" type="audio/mpeg">
+</audio>
+
 </body>
 </html>
