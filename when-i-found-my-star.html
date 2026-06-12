@@ -679,7 +679,9 @@
 <div id="particles"></div>
 
 <!-- MUSIC BUTTON -->
-<button class="music-btn" id="musicBtn" title="Toggle Music" onclick="toggleMusic()">🎵</button>
+<button class="music-btn" id="musicBtn" title="Toggle Music" onclick="toggleMusic()" style="display:none;">
+  🎵
+</button>
 
 <!-- BACK BUTTON -->
 <button class="back-btn" id="backBtn" onclick="goBack()">←</button>
@@ -697,9 +699,9 @@
     <p class="cover-desc">Like I said, in a room full of stars, I was staring at your eyes, Oyin cantik. Now go find the star that belongs to you.</p>
   </div>
   <div style="display:flex;justify-content:center;">
-  <button class="btn btn-primary" onclick="showPage('game-page')">
-    ✦ Start Game ✦
-  </button>
+ <button class="btn btn-primary" onclick="startGameAndMusic()">
+  ✦ Start Game ✦
+</button>
 </div>
   <p style="margin-top:1.5rem;font-size:0.7rem;color:rgba(111,184,230,0.4);letter-spacing:0.2em;">MADE WITH ❤︎ FOR OYIN</p>
 </section>
@@ -855,21 +857,18 @@ function playMelodyStep() {
   melodyTimeout = setTimeout(playMelodyStep, note.d * 1000 + 20);
 }
 
-function toggleMusic() {
+function startGameAndMusic() {
+  showPage('game-page');
+
   const music = document.getElementById('bgMusic');
   const btn = document.getElementById('musicBtn');
 
-  if (music.paused) {
-    music.play();
-    btn.textContent = '🎶';
-    btn.classList.add('playing');
-  } else {
-    music.pause();
-    btn.textContent = '🎵';
-    btn.classList.remove('playing');
-  }
-}
+  music.play();
 
+  btn.style.display = 'flex';
+  btn.textContent = '🎶';
+  btn.classList.add('playing');
+}
 // ── STARFIELD ──
 function buildStarfield() {
   const sf = document.getElementById('starfield');
