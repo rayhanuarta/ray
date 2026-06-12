@@ -532,6 +532,13 @@ function typeText(el, text, onDone){
 
 /* ── Open confession button ───────────────────────────────── */
 document.getElementById('openBtn').addEventListener('click',()=>{
+
+  const music = document.getElementById('bgMusic');
+
+  music.play().catch(err=>{
+    console.log("Music blocked:", err);
+  });
+
   goTo('page2',()=>{
     const body=document.getElementById('letterBody');
     const cont=document.getElementById('continueBtn');
@@ -696,5 +703,8 @@ document.addEventListener('mousemove',e=>{
   setTimeout(()=>el.remove(),900);
 });
 </script>
+  <audio id="bgMusic" loop>
+  <source src="Bryan Adams - Heaven.mp3" type="audio/mpeg">
+</audio>
 </body>
 </html>
