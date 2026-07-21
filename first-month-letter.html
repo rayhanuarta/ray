@@ -1391,6 +1391,9 @@ function goToPage(pageNumber) {
 function initFloatingMusic() {
   const audio = document.getElementById("bg-audio");
   const btn = document.getElementById("floating-music-btn");
+
+  if (!btn) return;
+
   const playIcon = btn.querySelector(".music-icon-play");
   const pauseIcon = btn.querySelector(".music-icon-pause");
 
@@ -1404,14 +1407,14 @@ function initFloatingMusic() {
 
   audio.addEventListener("play", () => {
     btn.classList.add("playing");
-    playIcon.hidden = true;
-    pauseIcon.hidden = false;
+    if (playIcon) playIcon.hidden = true;
+    if (pauseIcon) pauseIcon.hidden = false;
   });
 
   audio.addEventListener("pause", () => {
     btn.classList.remove("playing");
-    playIcon.hidden = false;
-    pauseIcon.hidden = true;
+    if (playIcon) playIcon.hidden = false;
+    if (pauseIcon) pauseIcon.hidden = true;
   });
 }
 
