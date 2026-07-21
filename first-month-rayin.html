@@ -1050,6 +1050,17 @@ img { max-width: 100%; display: block; }
   .polaroid { width: 190px; }
 }
 
+   .icon-play,
+.icon-pause {
+  width: 24px;
+  height: 24px;
+}
+
+.icon-play[hidden],
+.icon-pause[hidden] {
+  display: none !important;
+}
+
 </style>
 </head>
 <body>
@@ -1216,14 +1227,16 @@ img { max-width: 100%; display: block; }
       <h2 class="script-title script-title--letter reveal-on-scroll">To My Whole Heart, Owynaire</h2>
 
       <div class="polaroid-row reveal-on-scroll">
+         <figure class="polaroid polaroid--left">
         <img src="Rayhan.jpg" alt="Rayhan">
           <figcaption>Rayhan</figcaption>
         </figure>
+         <figure class="polaroid polaroid--right">
         <img src="Owyn.jpg" alt="Oyin">
           <figcaption>Owynaire</figcaption>
         </figure>
       </div>
-
+<figure class="landscape-frame reveal-on-scroll">
       <img src="Rayin.jpg" alt="Our moment">
         <figcaption>Where It All Began</figcaption>
       </figure>
