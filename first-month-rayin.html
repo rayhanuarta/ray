@@ -1057,7 +1057,9 @@ img { max-width: 100%; display: block; }
 }
 
 .icon-play[hidden],
-.icon-pause[hidden] {
+.icon-pause[hidden],
+.music-icon-play[hidden],
+.music-icon-pause[hidden] {
   display: none !important;
 }
 
@@ -1078,12 +1080,6 @@ img { max-width: 100%; display: block; }
 <div class="grain-overlay" aria-hidden="true"></div>
 <canvas id="particles" aria-hidden="true"></canvas>
 
-<!-- ============ FLOATING MUSIC BUTTON ============ -->
-<button id="floating-music-btn" class="floating-music-btn" aria-label="Putar atau jeda musik" title="Musik">
-  <svg viewBox="0 0 24 24" class="music-icon-play"><path d="M8 5v14l11-7z"/></svg>
-  <svg viewBox="0 0 24 24" class="music-icon-pause" hidden><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
-  <span class="vinyl-spin"></span>
-</button>
 
 <!-- shared audio element: replace src with your song file -->
 <audio id="bg-audio" loop preload="none">
